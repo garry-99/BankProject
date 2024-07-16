@@ -24,18 +24,19 @@ public class Main {
 
             UserController userController = new UserController(scanner, userService);
 
-            Map<String, String> controlMap = new HashMap<>();
+            HashMap<String, String> controlMap = new HashMap<>();
             controlMap.put("Continue Loop", "true");
             while(Boolean.parseBoolean(controlMap.get("Continue Loop"))){
 
                 userController.promptUserForService(controlMap);
-                if(controlMap.containsKey("User")){
+                while(controlMap.containsKey("User")){
+
                     AccountDao accountDao = new SqliteAccountDao();
                     AccountService accountService = new AccountService(accountDao);
                     System.out.printf("Hey %s Choose from options below ", controlMap.get("User"));
                     AccountController accountController = new AccountController(scanner, accountService);
-                    accountController.promptUserAccount();
-                    scanner.nextLine();
+                    accountController.promptUserAccount(controlMap);
+
 
                 }
             }

@@ -5,6 +5,7 @@ import com.revature.exception.ValidUserException;
 import com.revature.service.UserService;
 import com.revature.entity.User;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -18,7 +19,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    public void promptUserForService(Map<String,String> controlMap){
+    public void promptUserForService(HashMap<String,String> controlMap){
 
         System.out.println("What would you like to do?");
         System.out.println("1. register an account");
@@ -32,8 +33,14 @@ public class UserController {
                     registerNewUser();
                     break;
                 case "2":
+                    User user = login();
 
-                    controlMap.put("User", login().getUsername());
+
+                    controlMap.put("User", user.getUsername());
+                    controlMap.put("UserId",String.valueOf(user.getId()));
+                    System.out.println(controlMap);
+
+
                     break;
                 case "q":
                     System.out.println("Goodbye!");
@@ -46,15 +53,14 @@ public class UserController {
     }
 
     public void registerNewUser(){
-        // this either returns details on the new account or returns a failure message
-        // TODO: generic runtime exception is thrown, make it more specific
+
         User newCredentials = getUserCredentials();
         User newUser = userService.validateNewCredentials(newCredentials);
         System.out.printf("New account created: %s", newUser);
     }
 
     public User login(){
-        // we can re-use getUserCredentials() here to avoid rewriting the same logic
+
         return userService.checkLoginCredentials(getUserCredentials());
     }
 

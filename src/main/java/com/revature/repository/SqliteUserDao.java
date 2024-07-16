@@ -59,14 +59,14 @@ public class SqliteUserDao implements UserDao{
         try(Connection connection = DatabaseConnector.createConnection()){
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, newUser.getUsername());
-            System.out.println(ps);
+
             ResultSet resultSet = ps.executeQuery();
 
             User user = new User();
 
             if(resultSet.next()){
 
-                User userRecord = new User();
+                user.setId(resultSet.getInt("id"));
                 user.setUsername(resultSet.getString("username"));
                 user.setPassword(resultSet.getString("password"));
             }

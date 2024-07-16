@@ -10,9 +10,11 @@ create table "user"(
 
 create table "account" (
     id integer PRIMARY KEY ,
+    name text,
     type text,
-    amount REAL,
+    amount REAL CHECK (amount >= 0 ) DEFAULT 0 ,
     user_id integer,
+    UNIQUE(name),
     FOREIGN KEY (user_id) REFERENCES user(id)
 );
 

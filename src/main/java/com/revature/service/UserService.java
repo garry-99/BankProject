@@ -36,16 +36,14 @@ public class UserService {
 
 
         User user = userDao.getUser(credentials);
-        boolean usernameMatches = user.getUsername().equals(credentials.getUsername());
-        boolean passwordMatches = user.getPassword().equals(credentials.getPassword());
-        if (usernameMatches && passwordMatches){
-            return credentials;
+        if(user != null){
+            boolean usernameMatches = user.getUsername().equals(credentials.getUsername());
+            boolean passwordMatches = user.getPassword().equals(credentials.getPassword());
+            if (usernameMatches && passwordMatches){
+                return user;
+            }
         }
-//        for (User user : userDao.getUser(credentials)){
-//            // if username and password match return the credentials
-//
-//        }
-        // this exception holds our failure message for the user if their credentials are invalid
+
         throw new LoginFail("Credentials are invalid: please try again");
     }
 

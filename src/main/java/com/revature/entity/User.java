@@ -5,18 +5,26 @@ import java.util.Objects;
 
 public class User implements Serializable {
 
+    private int id;
     private String username;
     private String password;
 
     public User(){}
 
-    // technically Java Beans just have a no args constructor, but we are including
-    // this one for convenience
+
     public User(String username, String password){
         this.username = username;
         this.password = password;
     }
 
+    public int getId() {
+
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getUsername() {
         return username;
     }
