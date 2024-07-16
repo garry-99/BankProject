@@ -59,7 +59,7 @@ public class UserService {
     private boolean checkUsernameIsUnique(User newUserCredentials){
         boolean usernameIsUnique = true;
         User user = userDao.getUser(newUserCredentials);
-        System.out.println(user);
+
         if(user != null)usernameIsUnique = false;
         return usernameIsUnique;
     }

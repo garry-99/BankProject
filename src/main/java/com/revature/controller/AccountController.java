@@ -5,6 +5,7 @@ import com.revature.exception.ValidUserException;
 import com.revature.service.AccountService;
 
 import java.nio.channels.AcceptPendingException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ public class AccountController {
         System.out.println("1. Create an account");
         System.out.println("2. Details of current bank accounts");
         System.out.println("3. Select checking account for transfers");
+        System.out.println("4. Select savings account for transfers");
         System.out.println("q. Log out");
 
         try{
@@ -37,7 +39,10 @@ public class AccountController {
                     selectAccount(controlMap);
                     break;
                 case "3":
-                    transerAccount(controlMap);
+                    transerAccount(controlMap,"Checkings");
+                    break;
+                case "4":
+                    transerAccount(controlMap,"Savings");
                     break;
                 case "q":
                     System.out.println("Logged Out");
@@ -48,8 +53,8 @@ public class AccountController {
                     System.out.println("Enter the valid choice");
             }
 
-        } catch(LoginFail | ValidUserException exception){
-            System.out.println(exception.getMessage());
+        } catch( Exception e){
+            System.out.println(e.getMessage());
         }
     }
     public void createAccount(HashMap<String, String> m1){
@@ -101,11 +106,18 @@ public class AccountController {
         }
         return accounts;
     }
-    public void transerAccount(HashMap<String, String > m1){
-        List<Account> accounts = selectAccount(m1,"Checkings");
+    public void transerAccount(HashMap<String, String > m1, String type){
+        List<Account> accounts = selectAccount(m1,type);
+        if(accounts.isEmpty()){
+            System.out.println("Create accounts to start your banking journey");
+            return;
+        }
         System.out.println("Give Account Number You Transer from");
         int ncnt = sc.nextInt();
         sc.nextLine();
+        if(ncnt > accounts.size()){
+
+        }
         Account account =  accounts.get(ncnt-1);
 
         while(true){
@@ -134,6 +146,14 @@ public class AccountController {
                     System.out.println("Enter amount to deposit: ");
                     float depositAmount = sc.nextFloat();
                     sc.nextLine();
+                    if(type.equals("Savings")){
+                        System.out.println("You will get $100 more on each deposit over 10000");
+                        if(depositAmount > 10000)
+                         depositAmount += 100;
+                    }
+
+
+
                     account.setAmount(account.getAmount() + depositAmount);
                      accountService.withdraw(account);
                     break;

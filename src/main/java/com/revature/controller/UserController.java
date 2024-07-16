@@ -35,11 +35,8 @@ public class UserController {
                 case "2":
                     User user = login();
 
-
                     controlMap.put("User", user.getUsername());
                     controlMap.put("UserId",String.valueOf(user.getId()));
-                    System.out.println(controlMap);
-
 
                     break;
                 case "q":
@@ -56,7 +53,7 @@ public class UserController {
 
         User newCredentials = getUserCredentials();
         User newUser = userService.validateNewCredentials(newCredentials);
-        System.out.printf("New account created: %s", newUser);
+        System.out.printf("New account created: %s ", newUser.getUsername());
     }
 
     public User login(){

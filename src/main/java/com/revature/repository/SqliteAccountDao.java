@@ -95,6 +95,7 @@ public class SqliteAccountDao implements AccountDao  {
             ps.setFloat(1,newCredentials.getAmount());
             ps.setString(2,newCredentials.getName());
 
+
             int result = ps.executeUpdate();
 
 
